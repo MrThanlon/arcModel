@@ -35,6 +35,8 @@ const uint ledInsideFlash[15]={ 3,10,12,47,45,44,43,20,14,29,27,25,23,05,02};
 const ulong Odelay=1000/OSPEED;
 const ulong Idelay=1000/ISPEED;//由速度定义延迟
 
+ulong millisCopy=0;
+
 int i1=0,i2=0,i3=0;//分别对应三个数组
 
 void setup()
@@ -63,8 +65,10 @@ void setup()
 void loop()
 {
 	//使用millis%delay来确定触发时刻
-	if(millis()%Odelay==0)//外圈触发
+	if(millis()%Odelay==0&&//外圈触发
+		millis()!=millisCopy)//millis不是上次的millis
 	{
+		millisCopy=millis();//拷贝本次的时间
 		//外圈逆时针跑,i1从8到0循环
 		dw(ledOutside[i1-1],HIGH);//点亮上一盏
 		dw(ledOutside[i1],LOW);//关闭这一盏
@@ -72,8 +76,10 @@ void loop()
 		if(i1==-1) {i1=8;}//i1到-1的时候回到8
 	}
 
-	if(millis()%Idelay==0)
+	if(millis()%Idelay==0&&
+		millis()!=millisCopy)//millis不是上次的millis
 	{
+		millisCopy=millis();//拷贝本次的时间
 		//内圈顺时针跑马,i3从0到14循环
 		dw(ledInsideLight[i3+1],HIGH);//点亮下一盏
 		dw(ledInsideLight[i3],LOW);//关闭这一盏
