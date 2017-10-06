@@ -65,7 +65,7 @@ void setup()
 void loop()
 {
 	//使用millis%delay来确定触发时刻
-	if(millis()%Odelay==0&&//外圈触发
+	if((millis()-millisCopy)%Odelay==0&&//外圈触发
 		millis()!=millisCopy)//millis不是上次的millis
 	{
 		millisCopy=millis();//拷贝本次的时间
@@ -76,7 +76,7 @@ void loop()
 		if(i1==-1) {i1=8;}//i1到-1的时候回到8
 	}
 
-	if(millis()%Idelay==0&&
+	if((millis()-millisCopy)%Idelay==0&&
 		millis()!=millisCopy)//millis不是上次的millis
 	{
 		millisCopy=millis();//拷贝本次的时间
